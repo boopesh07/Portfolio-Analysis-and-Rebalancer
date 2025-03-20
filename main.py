@@ -67,30 +67,7 @@ async def update_stock_current_prices_in_portfolio(stocks_df: pd.DataFrame) -> p
         updated_df = updated_df.dropna(subset=['Current Price (USD)'])
         
         return updated_df
-
-def clear_price_cache():
-    """Clear the price cache"""
-    price_cache.clear()
-    print("Price cache cleared")
-
-# Keep the existing fetch_stock_price for backward compatibility
-def fetch_stock_price(symbol):
-    base_url = "https://www.finnhub.io/api/v1/quote"
-    params = {
-        "symbol": symbol,
-        "token": API_KEY
-    }
     
-    try:
-        response = requests.get(base_url, params=params)
-        response.raise_for_status()  # Raise an exception for bad status codes
-        data = response.json()
-        return data["c"]  # Return the current price
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching stock price: {e}")
-        return None
-    
-
 stock_data = """Stock Symbol,Number of Shares,Purchase Price (USD),Current Price (USD),Sector
 AAPL,10,150.00,170.00,Technology
 GOOGL,5,1200.00,1250.00,Technology
